@@ -15,7 +15,7 @@ import {
   Alert,
   StyleSheet,
 } from 'react-native'
-
+import Icon from "react-native-vector-icons/Ionicons";
 const ios_blue = '#007AFF'
 
 export default class SelectMultipleButton extends Component {
@@ -37,12 +37,19 @@ export default class SelectMultipleButton extends Component {
     ),
 
     highLightStyle: PropTypes.shape({
-      borderColor: PropTypes.string.isRequired,
+      borderColor: PropTypes.string,
       backgroundColor: PropTypes.string.isRequired,
       textColor: PropTypes.string.isRequired,
       borderTintColor: PropTypes.string.isRequired,
       backgroundTintColor: PropTypes.string.isRequired,
       textTintColor: PropTypes.string.isRequired,
+      shadowColor: PropTypes.string,
+      shadowOffset: PropTypes.object,
+      shadowOpacity: PropTypes.number,
+      shadowRadius: PropTypes.number,
+      elevation: PropTypes.number,
+      padding: PropTypes.number,
+      borderRadius: PropTypes.number,
     }),
 
     buttonViewStyle: PropTypes.object,
@@ -100,20 +107,40 @@ export default class SelectMultipleButton extends Component {
               styles.button,
               this.props.buttonViewStyle,
               {
-                borderColor: this.state.selected ? this.props.highLightStyle.borderTintColor : this.props.highLightStyle.borderColor,
-                backgroundColor: this.state.selected ? this.props.highLightStyle.backgroundTintColor : this.props.highLightStyle.backgroundColor,
+                flexDirection:'row',
+                borderColor: this.state.selected ? '#5fcdf2' : 'transparent',
+                backgroundColor: this.state.selected ? '#fff' : 'white',
               }
+              
             ]
           }>
+          <View>
           <Text style={
             [
               styles.text,
               this.props.textStyle,
-              { color: this.state.selected ? this.props.highLightStyle.textTintColor : this.props.highLightStyle.textColor }
+              { color: this.state.selected ? '#5fcdf2': '#444444' },
             ]
           }>
             {this.props.displayValue === undefined ? this.props.value : this.props.displayValue}
+            
           </Text>
+          </View>
+          <View>
+          <Icon
+              name="ios-checkmark-circle"
+              onPress={this._navigateBack}
+              style={[{
+                display: this.state.selected ? 'flex' : "none",
+                marginRight:5,
+                marginLeft:-5,
+              }]}
+              // style={[styles.blue, styles.goBackStyle2]}
+              size={20}
+              color="#5fcdf2"
+            />
+          </View>
+         
         </View>
       </TouchableWithoutFeedback>
     )
@@ -126,13 +153,20 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1
+    borderWidth: 1,
+    padding:10,
+    borderRadius:8,
+
   },
   text: {
     textAlign: 'center',
     marginTop: 5,
     marginBottom: 5,
-    marginLeft: 10,
+    // marginLeft: 10,
     marginRight: 10,
+    fontWeight:'500',
+    fontSize:15,
+    
+    
   }
 })
